@@ -4,9 +4,8 @@
 [ext_resource path="res://Map.gd" type="Script" id=2]
 
 [node name="Map" type="Sprite"]
-scale = Vector2( 0.4, 0.4 )
+scale = Vector2( 0.5, 0.5 )
 z_index = -1
 texture = ExtResource( 1 )
 centered = false
 script = ExtResource( 2 )
-debug = true

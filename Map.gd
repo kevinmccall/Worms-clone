@@ -2,7 +2,7 @@ extends Sprite
 
 export var debug : bool
 
-var map_image : Image = texture.get_data()
+onready var map_image : Image = texture.get_data()
 var chunk_size = Vector2(32, 32)
 var background_color = Color("808080")
 
@@ -44,7 +44,7 @@ func generate_chunks():
 			var chunk_rect = Rect2(chunk_rect_pos, chunk_size)
 			var image_section = map_image.get_rect(chunk_rect)
 			var chunk_instance = chunk_scene.instance()
-			chunk_instance.init(image_section, chunk_rect_pos + .5 * chunk_size)
+			chunk_instance.init(image_section, chunk_rect_pos)
 			add_child(chunk_instance)
 	self_modulate = background_color
 	map_image.unlock()
