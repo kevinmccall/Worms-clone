@@ -9,19 +9,43 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "StaticBody2D",
+"class": "Chunk",
+"language": "GDScript",
+"path": "res://Chunk/Chunk.gd"
+}, {
+"base": "ExplosionShape",
+"class": "ExplosionCircle",
+"language": "GDScript",
+"path": "res://ExplosionCircle.gd"
+}, {
+"base": "Node2D",
+"class": "ExplosionShape",
+"language": "GDScript",
+"path": "res://ExplosionShape.gd"
+}, {
 "base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
-"path": "res://StateMachine.gd"
+"path": "res://StateMachine/StateMachine.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Worm",
+"language": "GDScript",
+"path": "res://Worm/Worm.gd"
 } ]
 _global_script_class_icons={
-"StateMachine": ""
+"Chunk": "",
+"ExplosionCircle": "",
+"ExplosionShape": "",
+"StateMachine": "",
+"Worm": ""
 }
 
 [application]
 
 config/name="Wroms"
-config/icon="res://icon.png"
+config/icon="res://etc/icon.png"
 
 [input]
 
@@ -53,4 +77,4 @@ right={
 
 [rendering]
 
-environment/default_environment="res://default_env.tres"
+environment/default_environment="res://etc/default_env.tres"
