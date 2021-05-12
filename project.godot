@@ -45,6 +45,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Wroms"
+run/main_scene="res://testign/Test.tscn"
 config/icon="res://etc/icon.png"
 
 [input]

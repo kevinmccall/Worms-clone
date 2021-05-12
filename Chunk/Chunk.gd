@@ -2,40 +2,34 @@ extends StaticBody2D
 class_name Chunk
 
 var polygons
-var bitmap
+var size
 
-func recalculate_collisions():
+func recalculate_collisions(bitmap):
 	for child in get_children():
 		if child is CollisionPolygon2D:
 			child.queue_free()
-	if not polygons:
-		return
+	polygons = bitmap.opaque_to_polygons(Rect2(Vector2.ZERO, bitmap.get_size()))
 	for polygon in polygons:
 		var collision_shape = CollisionPolygon2D.new()
 		collision_shape.polygon = polygon
 		add_child(collision_shape)
-	
 
 func update_image(new_bitmap):
 	pass
 
-func init(image : Image, pos : Vector2) -> void:
+func init(image : Image, pos : Vector2, bitmap : BitMap) -> void:
 	image.lock()
 	var image_texture = ImageTexture.new()
 	image_texture.create_from_image(image)
 	$Sprite.texture = image_texture
 	$Sprite.centered = false
-	bitmap = BitMap.new()
-	bitmap.create_from_image_alpha(image, .01)
-	polygons = bitmap.opaque_to_polygons(Rect2(Vector2.ZERO, bitmap.get_size()))
-	for polygon in polygons:
-#		if polygon == PoolVector2Array([Vector2(0,32), Vector2(32,32), Vector2(32,0), Vector2(0,0)]):
-#			continue
-		var collision_shape = CollisionPolygon2D.new()
-		collision_shape.polygon = polygon
-		add_child(collision_shape)
-	image.unlock()
+	size = bitmap.get_size()
+	recalculate_collisions(bitmap)
 	global_position = pos
 	
 
+func get_rect():
+	return Rect2(global_position, size)
 
+#func _draw():
+#	draw_rect(Rect2(Vector2.ZERO, size), Color.white, false)
