@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://etc/temp.gd" type="Script" id=1]
-[ext_resource path="res://Map/MapImages/unnamed.png" type="Texture" id=2]
+[ext_resource path="res://Map/MapImages/leeeeeiiii.png" type="Texture" id=2]
 [ext_resource path="res://Map/MapImages/mongus.png" type="Texture" id=3]
 [ext_resource path="res://Map/Map.tscn" type="PackedScene" id=4]
 [ext_resource path="res://testign/Test.gd" type="Script" id=5]
@@ -22,5 +22,6 @@ scale = Vector2( 0.018506, 0.018506 )
 texture = ExtResource( 3 )
 
 [node name="Map" parent="." instance=ExtResource( 4 )]
-scale = Vector2( 2.73426, 1.31131 )
+position = Vector2( 178.298, 112.373 )
+scale = Vector2( 1.64058, 0.5 )
 texture = ExtResource( 2 )
