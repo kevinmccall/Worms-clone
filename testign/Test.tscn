@@ -22,6 +22,5 @@ scale = Vector2( 0.018506, 0.018506 )
 texture = ExtResource( 3 )
 
 [node name="Map" parent="." instance=ExtResource( 4 )]
-position = Vector2( 178.298, 112.373 )
-scale = Vector2( 1.64058, 0.5 )
+scale = Vector2( 1.75872, 0.5 )
 texture = ExtResource( 2 )

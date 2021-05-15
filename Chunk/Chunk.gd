@@ -1,8 +1,8 @@
 extends StaticBody2D
 class_name Chunk
 
-var polygons
-var size
+var polygons : Array
+var size : Vector2
 
 func recalculate_collisions(bitmap):
 	for child in get_children():
@@ -13,28 +13,27 @@ func recalculate_collisions(bitmap):
 		var collision_shape = CollisionPolygon2D.new()
 		collision_shape.polygon = polygon
 		add_child(collision_shape)
+	recalculate_visuals(bitmap)
 
 func init(image : Image, pos : Vector2, bitmap : BitMap) -> void:
 	image.lock()
 	var image_texture = ImageTexture.new()
 	image_texture.create_from_image(image)
 	$Sprite.texture = image_texture
-	$Sprite.material
 	$Sprite.centered = false
 	size = bitmap.get_size()
 	recalculate_collisions(bitmap)
-#	recalculate_visuals(bitmap)
+	recalculate_visuals(bitmap)
 	global_position = pos
+	image.unlock()
 	
 
 func get_rect():
 	return Rect2(global_position, size)
 
 func recalculate_visuals(bitmap):
-	var image = BitmapHelper.bitmap_to_image(bitmap)
-	var image_texture = ImageTexture.new()
-	image_texture.create_from_image(image)
-	$Sprite.material.set_shader_param("mask", image_texture)
+	var bitmap_image = BitmapHelper.bitmap_to_image(bitmap)
+	$Sprite.material.set_shader_param("mask", bitmap_image)
 
 #func _draw():
 #	draw_rect(Rect2(Vector2.ZERO, size), Color.white, false)

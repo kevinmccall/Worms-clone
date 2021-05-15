@@ -19,6 +19,7 @@ var pos_to_chunk = {}
 func _ready():
 	resize_image()
 	generate_chunks()
+	move(global_position)
 	
 	## DELET THIS
 #	testing()
@@ -26,6 +27,11 @@ func _ready():
 
 #func _process(delta):
 #	print(get_chunk_at_point(get_global_mouse_position()))
+
+
+func move(new_position):
+	var rounded_pos = Vector2(round(new_position.x), round(new_position.y))
+	global_position = new_position
 
 
 func resize_image():
@@ -62,15 +68,28 @@ func generate_chunks():
 	map_image.unlock()
 	update()
 
-
 func update_chunks():
 	while chunks_needing_update != []:
 		var chunk = chunks_needing_update.pop_front()
-		var rect = Rect2(chunk.global_position, chunk_size)
+		var rect = chunk.get_rect()
 		rect.position -= global_position
-		print(rect.position)
 		var bitmap_section = BitmapHelper.get_bitmap_rect(bitmap, rect)
 		chunk.recalculate_collisions(bitmap_section)
+
+
+func get_chunk_at_point(point):
+	var chunk_pos = Vector2()
+	point -= starting_pos
+	point -= global_position
+	chunk_pos.x = floor(point.x / chunk_size.x)
+	chunk_pos.y = floor(point.y / chunk_size.y)
+	if pos_to_chunk.has(chunk_pos):
+		return pos_to_chunk[chunk_pos]
+
+
+func add_chunk_for_update(chunk):
+	if not chunk in chunks_needing_update:
+		chunks_needing_update.append(chunk)
 
 
 func get_circle_points(pos : Vector2, radius: int):
@@ -84,38 +103,20 @@ func get_circle_points(pos : Vector2, radius: int):
 	return points
 
 
-func add_chunk_for_update(chunk):
-	if not chunk in chunks_needing_update:
-		chunks_needing_update.append(chunk)
+func set_bitmap_points(bm, global_points, bit):
+	for point in global_points:
+		var chunk = get_chunk_at_point(point)
+		if chunk != null:
+			bm.set_bit(point - global_position, bit)
+			add_chunk_for_update(chunk)
 
-
-func get_chunk_at_point(point):
-	var chunk_pos = Vector2()
-	point -= starting_pos
-	point -= global_position
-	chunk_pos.x = floor(point.x / chunk_size.x)
-	chunk_pos.y = floor(point.y / chunk_size.y)
-	if pos_to_chunk.has(chunk_pos):
-		return pos_to_chunk[chunk_pos]
 
 func explode(pos : Vector2, radius : int):
 	var explosion_points = get_circle_points(pos, radius)
 	set_bitmap_points(bitmap, explosion_points, false)
 	update_chunks()
-	print("boom")
 
 
 ## DELET THIS
-func testing():
-	BitmapHelper.save_bitmap_as_image(bitmap)
-
-func set_bitmap_points(bm, points, bit):
-	for point in points:
-		var chunk = get_chunk_at_point(point)
-		if chunk != null:
-			bm.set_bit(point, bit)
-			add_chunk_for_update(chunk)
-
-func _draw():
-	var rect = map_image.get_used_rect()
-	draw_rect(rect, Color.blue, false)
+#func testing():
+#	BitmapHelper.save_bitmap_as_image(bitmap)

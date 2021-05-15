@@ -34,8 +34,8 @@ func bitmap_to_image(bm : BitMap):
 			var pos = Vector2(x,y)
 			var value = bm.get_bit(pos)
 			if value:
-				image.set_pixelv(pos, Color.black)
+				image.set_pixelv(pos, Color.white)
 			else:
-				image.set_pixelv(pos, Color.transparent)
+				image.set_pixelv(pos, Color.black)
 	image.unlock()
 	return image
