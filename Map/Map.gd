@@ -14,12 +14,15 @@ var chunk_x
 var chunk_y 
 var starting_pos 
 var pos_to_chunk = {}
-
+var mask : Image
+var mask_texture : ImageTexture
 
 func _ready():
 	resize_image()
 	generate_chunks()
+	init_visuals()
 	move(global_position)
+	
 	
 	## DELET THIS
 #	testing()
@@ -57,15 +60,13 @@ func generate_chunks():
 		for y in range(chunk_y):
 			var chunk_rect_pos = starting_pos + Vector2(x, y) * chunk_size
 			var chunk_rect = Rect2(chunk_rect_pos, chunk_size)
-			var image_section = map_image.get_rect(chunk_rect)
 			var bitmap_section = BitmapHelper.get_bitmap_rect(bitmap, chunk_rect)
 			var chunk_instance = chunk_scene.instance()
-			chunk_instance.init(image_section, chunk_rect_pos, bitmap_section)
+			chunk_instance.init(chunk_rect_pos, bitmap_section)
 			pos_to_chunk[Vector2(x,y)] = chunk_instance
 			add_child(chunk_instance)
 			
 	self_modulate = background_color
-	map_image.unlock()
 	update()
 
 func update_chunks():
@@ -75,6 +76,8 @@ func update_chunks():
 		rect.position -= global_position
 		var bitmap_section = BitmapHelper.get_bitmap_rect(bitmap, rect)
 		chunk.recalculate_collisions(bitmap_section)
+		var image = BitmapHelper.bitmap_to_image(bitmap_section)
+		set_visuals(image, chunk.global_position)
 
 
 func get_chunk_at_point(point):
@@ -116,6 +119,19 @@ func explode(pos : Vector2, radius : int):
 	set_bitmap_points(bitmap, explosion_points, false)
 	update_chunks()
 
+
+func set_visuals(image : Image, pos : Vector2):
+	mask.blit_rect(image, Rect2(Vector2.ZERO, image.get_size()), pos)
+	mask_texture.set_data(mask)
+	material.set_shader_param("mask", mask_texture)
+
+
+func init_visuals():
+	mask_texture = ImageTexture.new()
+	mask = Image.new()
+	mask.copy_from(map_image)
+	mask_texture.create_from_image(mask)
+	material.set_shader_param("mask", mask_texture)
 
 ## DELET THIS
 #func testing():

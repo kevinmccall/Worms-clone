@@ -27,7 +27,7 @@ func save_bitmap_as_image(bm : BitMap):
 
 func bitmap_to_image(bm : BitMap):
 	var image = Image.new()
-	image.create(bm.get_size().x, bm.get_size().y, false, Image.FORMAT_RGB8)
+	image.create(bm.get_size().x, bm.get_size().y, false, Image.FORMAT_RGBA8)
 	image.lock()
 	for x in range(bm.get_size().x):
 		for y in range(bm.get_size().y):
@@ -36,6 +36,6 @@ func bitmap_to_image(bm : BitMap):
 			if value:
 				image.set_pixelv(pos, Color.white)
 			else:
-				image.set_pixelv(pos, Color.black)
+				image.set_pixelv(pos, Color.transparent)
 	image.unlock()
 	return image
