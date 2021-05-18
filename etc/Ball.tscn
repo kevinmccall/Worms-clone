@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Map/MapImages/leeeeeiiii.png" type="Texture" id=1]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -8,3 +10,7 @@ gravity_scale = 30.16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.0395542, 0.0247442 )
+texture = ExtResource( 1 )

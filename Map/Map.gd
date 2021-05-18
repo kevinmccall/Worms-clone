@@ -66,7 +66,6 @@ func generate_chunks():
 			pos_to_chunk[Vector2(x,y)] = chunk_instance
 			add_child(chunk_instance)
 			
-	self_modulate = background_color
 	update()
 
 func update_chunks():
