@@ -4,12 +4,13 @@ extends Node
 func get_bitmap_rect(original_bitmap : BitMap, rect : Rect2):
 	var bm = BitMap.new()
 	bm.create(rect.size)
+	var original_bm_size = original_bitmap.get_size()
 	
 	for x in range(rect.size.x):
 		for y in range(rect.size.y):
 			var pos = Vector2(x,y) 
 			var bitmap_target = pos + rect.position
-			if (pos + rect.position).x >= original_bitmap.get_size().x or (pos + rect.position).y >= original_bitmap.get_size().y:
+			if bitmap_target.x >= original_bm_size.x or bitmap_target.y >= original_bm_size.y:
 				bm.set_bit(pos, false)
 				continue
 			bm.set_bit(pos, original_bitmap.get_bit(bitmap_target))
@@ -25,9 +26,10 @@ func save_bitmap_as_image(bm : BitMap):
 	if error != OK:
 		print("uh oh, stinky, %s" % error)
 
+
 func bitmap_to_image(bm : BitMap):
 	var image = Image.new()
-	image.create(bm.get_size().x, bm.get_size().y, false, Image.FORMAT_RGBA8)
+	image.create(bm.get_size().x, bm.get_size().y, false, Image.FORMAT_LA8)
 	image.lock()
 	for x in range(bm.get_size().x):
 		for y in range(bm.get_size().y):

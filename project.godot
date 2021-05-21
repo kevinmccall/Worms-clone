@@ -25,6 +25,11 @@ _global_script_classes=[ {
 "path": "res://ExplosionShape.gd"
 }, {
 "base": "Node",
+"class": "State",
+"language": "GDScript",
+"path": "res://StateMachine/State.gd"
+}, {
+"base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://StateMachine/StateMachine.gd"
@@ -38,6 +43,7 @@ _global_script_class_icons={
 "Chunk": "",
 "ExplosionCircle": "",
 "ExplosionShape": "",
+"State": "",
 "StateMachine": "",
 "Worm": ""
 }

@@ -16,12 +16,15 @@ var starting_pos
 var pos_to_chunk = {}
 var mask : Image
 var mask_texture : ImageTexture
+#var chunk_thread : Thread
 
 func _ready():
 	resize_image()
 	generate_chunks()
 	init_visuals()
 	move(global_position)
+	
+#	chunk_thread = Thread.new()
 	
 	
 	## DELET THIS
@@ -68,15 +71,14 @@ func generate_chunks():
 			
 	update()
 
-func update_chunks():
+func update_chunks(aaaaaaaafake_args):
 	while chunks_needing_update != []:
 		var chunk = chunks_needing_update.pop_front()
 		var rect = chunk.get_rect()
 		rect.position -= global_position
 		var bitmap_section = BitmapHelper.get_bitmap_rect(bitmap, rect)
 		chunk.recalculate_collisions(bitmap_section)
-		var image = BitmapHelper.bitmap_to_image(bitmap_section)
-		set_visuals(image, chunk.global_position)
+		set_visuals(bitmap_section, chunk.global_position)
 
 
 func get_chunk_at_point(point):
@@ -116,10 +118,11 @@ func set_bitmap_points(bm, global_points, bit):
 func explode(pos : Vector2, radius : int):
 	var explosion_points = get_circle_points(pos, radius)
 	set_bitmap_points(bitmap, explosion_points, false)
-	update_chunks()
+#	chunk_thread.start(self, "update_chunks")
+	update_chunks("aaa")
 
-
-func set_visuals(image : Image, pos : Vector2):
+func set_visuals(bm : BitMap, pos : Vector2):
+	var image = BitmapHelper.bitmap_to_image(bm)
 	mask.blit_rect(image, Rect2(Vector2.ZERO, image.get_size()), pos)
 	mask_texture.set_data(mask)
 	material.set_shader_param("mask", mask_texture)
@@ -129,8 +132,14 @@ func init_visuals():
 	mask_texture = ImageTexture.new()
 	mask = Image.new()
 	mask.copy_from(map_image)
+	mask.convert(Image.FORMAT_LA8)
 	mask_texture.create_from_image(mask)
 	material.set_shader_param("mask", mask_texture)
+
+
+#func _exit_tree():
+#	chunk_thread.wait_to_finish()
+
 
 ## DELET THIS
 #func testing():

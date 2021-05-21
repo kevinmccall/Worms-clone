@@ -1,29 +1,37 @@
 extends Node
 class_name StateMachine
 
-var state = null setget set_state
-var states = {}
+export var starting_state : NodePath
+
+var state : State setget set_state 
+var states = []
 var previous_state = null
+onready var target = get_parent()
+
+func _ready():
+	for state in get_children():
+		state.character = target
+	set_state(get_node(starting_state))
+	yield(target, "ready")
+
 
 func _physics_process(delta):
-	state._state_logic(delta)
-	var transition = state._get_transition(delta)
+	
+	if state == null:
+		return
+	
+	state._state_logic(delta, target.get_input())
+	var transition = state._get_transition()
 	if transition != null:
 		set_state(transition)
 
 func set_state(new_state):
-	if new_state == null:
-		print("failed switch state")
-		return -1
-
+	if state != null:
+		state._exit_state()
+	
 	previous_state = state
 	state = new_state
 	
-	if previous_state != null:
-		state._exit_state(state, previous_state)
-	state._enter_state(state, previous_state)
+	if state != null:
+		state._enter_state()
 
-func add_children_states():
-	for i in range(get_child_count()):
-		var current_child = get_child(i)
-		states[current_child] = i
