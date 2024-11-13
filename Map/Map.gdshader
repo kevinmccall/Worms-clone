@@ -9,5 +9,5 @@ void fragment() {
 	float alpha = mask_colors.a * original_colors.a;
 //	COLOR = vec4(original_colors.rgb, alpha);
 	COLOR = vec4(original_colors.rgb, alpha);
-	
+
 }

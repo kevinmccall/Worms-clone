@@ -6,7 +6,7 @@ var radius
 
 func _init(_radius):
 	radius = _radius
-	extents = radius
+	size = radius
 	generate_points()
 
 func generate_points():

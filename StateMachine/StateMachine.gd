@@ -1,18 +1,18 @@
 extends Node
 class_name StateMachine
 
-export var starting_state : NodePath
+@export var starting_state : NodePath
 
-var state : State setget set_state 
+var state : State: set = set_state
 var states = []
 var previous_state = null
-onready var target = get_parent()
+@onready var target = get_parent()
 
 func _ready():
 	for state in get_children():
 		state.character = target
 	set_state(get_node(starting_state))
-	yield(target, "ready")
+	await target.ready
 
 
 func _physics_process(delta):

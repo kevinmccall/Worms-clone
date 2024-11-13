@@ -1,10 +1,9 @@
-extends KinematicBody2D
+extends CharacterBody2D
 class_name Worm
 
 var input
-var velocity
 var health
-onready var state_machine = $StateMachine
+@onready var state_machine = $StateMachine
 
 func _process(delta):
 	input = get_input()

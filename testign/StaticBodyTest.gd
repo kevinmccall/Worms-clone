@@ -2,7 +2,7 @@ extends Node2D
 
 
 func _ready():
-	yield(get_tree(), "idle_frame")
+	await get_tree().idle_frame
 	var bodies = $Area2D.get_overlapping_bodies()
 	var areas = $Area2D.get_overlapping_areas()
 	

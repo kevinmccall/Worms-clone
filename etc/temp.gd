@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 var speed = 100
 
@@ -8,9 +8,10 @@ func _process(delta):
 		move_to = Vector2.ZERO
 	
 	if move_to.x < 0:
-		$Sprite.flip_h = true
+		$Sprite2D.flip_h = true
 	else:
-		$Sprite.flip_h = false
-	move_and_slide(move_to * speed)
+		$Sprite2D.flip_h = false
+	set_velocity(move_to * speed)
+	move_and_slide()
 	
 

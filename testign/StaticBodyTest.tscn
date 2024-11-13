@@ -29,9 +29,9 @@ shape = SubResource( 2 )
 position = Vector2( 105.046, 18.2689 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
-polygon = PoolVector2Array( 0, 32, 32, 32, 32, 0, 0, 0 )
+polygon = PackedVector2Array( 0, 32, 32, 32, 32, 0, 0, 0 )
 
-[node name="kinematic" type="KinematicBody2D" parent="."]
+[node name="kinematic" type="CharacterBody2D" parent="."]
 position = Vector2( 0, 32.9154 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="kinematic"]
@@ -42,6 +42,6 @@ shape = SubResource( 2 )
 position = Vector2( 99.778, 78.4399 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Chunk"]
-polygon = PoolVector2Array( 0, 2, 32, 32, 22, 0, 0, 0 )
+polygon = PackedVector2Array( 0, 2, 32, 32, 22, 0, 0, 0 )
 
 [editable path="Chunk"]

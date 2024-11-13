@@ -7,10 +7,10 @@ const gravity = -9.81
 func _state_logic(delta, input):
 	velocity.x = input.x * speed
 	velocity.y -= gravity
-	velocity = character.move_and_slide(velocity)
+	character.set_velocity(velocity)
+	character.move_and_slide()
+	velocity = character.velocity
 	
-	if velocity.x > 0:
-		
 
 func _get_transition():
 	return null

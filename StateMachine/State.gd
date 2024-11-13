@@ -1,7 +1,7 @@
 extends Node
 class_name State
 
-var character : KinematicBody2D
+var character : CharacterBody2D
 
 func _state_logic(delta, input):
 	pass
